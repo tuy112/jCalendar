@@ -1,0 +1,161 @@
+* {
+    margin: 0; padding: 0;
+    box-sizing: border-box;
+    cursor: default;
+}
+body {
+    background-color: #ededed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* 달력 css - header */
+.calendar {    
+    width: 450px; margin: 40px;
+    font-family: "NotoSansR";
+}
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.header .yearMonth { 
+    font-size: 30px;
+    font-weight: 600;
+    line-height: 1;
+}
+.nav {
+    display: flex;
+    border: 1px solid #333;
+    border-radius: 5px;
+}
+.navBtn {
+    width: 28px; height: 30px;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 34px;
+    background-color: transparent;
+    cursor: pointer;
+    transition: 0.5s;
+}
+.navBtn.prev:hover {
+    background-color: #333;
+    color: #fff;
+}
+.navBtn.next:hover {
+    background-color: #333;
+    color: #fff;
+}
+.navBtn.today {
+    font-weight: 600;
+    cursor: default;
+}
+.today {
+    width: 75px;
+    border-left: 1px solid #333333;
+    border-right: 1px solid #333333;
+    font-weight: 500;
+}
+
+
+/* 달력 css - main */
+.main {
+    padding-top: 40px;
+    position: relative;
+    margin: 0 auto;
+}
+.main .days {
+    display: flex;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+}
+.main .days:after { top: 368px;}
+.main .days .day {
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    width: calc(100% / 7);
+    text-align: left;
+    color: #999;
+    font-size: 13px;
+    text-align: center;
+    border-radius:5px;
+    margin: 25px 0 10px;
+}
+.current.today {background: rgb(242 242 242);}
+.main .days .day:nth-child(7n - 1) { color: #3c6ffa;}
+.main .days .day:nth-child(7n) { color: #ed2a61;}
+.main .days .day.disable { color: #ddd;}
+.main .dates {
+    display: flex;
+    flex-flow: wrap;
+    height: 290px;
+}
+
+
+/* 시계 css */
+.clockWrap {
+    position: fixed;
+    bottom: 5px; right: 10px;
+}
+.date {
+    font-size: 15px;
+    font-weight: 500;
+    color: #333;
+    text-align: right;
+}
+.clock {
+    font-size: 40px;
+    font-weight: 600;
+    color: #333;
+}
+
+/* copyRight */
+.copyRight {
+    position: fixed;
+    bottom: 5px; left: 10px;
+    font-size: 11px;
+    font-weight: 600;
+}
+.copyRight a {
+    text-decoration: none;
+    color: #333;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.copyRight a:hover {
+    border-bottom: 3px solid #333;
+}
+
+/* 반응형 적용 */
+@media screen and ( max-width: 576px ) {
+    .calendar {
+        width: 450px; margin: 40px;
+    }
+}
+@media screen and ( min-width: 768px ) {
+    .calendar {
+        width: 600px;; margin: 40px;
+    }
+    .main .days .day {
+        font-size: 14px;
+    }
+    .main .dates {
+        font-size: 14px;
+    }
+}
+@media screen and ( min-width: 992px ) {
+    .calendar {
+        width: 850px;; margin: 40px;
+    }
+    .main .days .day {
+        font-size: 16px;
+    }
+    .main .dates {
+        font-size: 16px;
+    }
+}
