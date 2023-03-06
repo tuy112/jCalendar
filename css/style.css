@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Questrial&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Jua&display=swap');
 
 * { cursor: default;}
 
@@ -29,7 +29,7 @@ td {
     height: 50px;
 }
 .Calendar thead tr:first-child td {
-    font-family: 'Questrial', sans-serif;
+    font-family: 'Jua', sans-serif;
     font-size: 18px;
     font-weight: 600;
     cursor: pointer;
@@ -88,6 +88,7 @@ td {
     position: fixed;
     bottom: 3px; right: 10px;
 
+    font-family: 'Jua', sans-serif;
     font-size: 15px;
     font-weight: 500;
     color: #333;
@@ -98,6 +99,7 @@ td {
     position: fixed;
     bottom: 4px; right: 10px;
 
+    font-family: 'Jua', sans-serif;
     font-size: 40px;
     font-weight: 600;
     color: #333;
@@ -107,7 +109,8 @@ td {
 .copyRight {
     position: fixed;
     bottom: 3px; left: 10px;
-    font-size: 11px;
+    font-family: 'Jua', sans-serif;
+    font-size: 12px;
     font-weight: 600;
 }
 .copyRight a {
