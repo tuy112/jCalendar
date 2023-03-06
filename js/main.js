@@ -14,7 +14,7 @@ function getTimezoneOffset(){
     const date = time.getDate();
 
     document.getElementById("clock").innerHTML = hour +":" + minutes + ":"+ seconds;
-    document.getElementById("date").innerHTML = year +"년 " + month + "월 "+ date + "일 ";
+    document.getElementById("date").innerHTML = year +"." + month + "."+ date + " ";
 }
 
 
@@ -37,9 +37,8 @@ function buildCalendar() {
             while (tbody_Calendar.rows.length > 0) {
                 tbody_Calendar.deleteRow(tbody_Calendar.rows.length - 1);
             }
-            // 첫번째 행 추가 
+            // Add 첫번째 행
             let nowRow = tbody_Calendar.insertRow();          
-            // 이번달 1일의 요일만큼 열 추가
             for (let j = 0; j < firstDate.getDay(); j++) {  
                 let nowColumn = nowRow.insertCell();
             }
