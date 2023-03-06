@@ -1,17 +1,17 @@
 // made by JStol
 
 // 시계 Part "요구하신대로 utc표준시 적용해서 전 세계 동일하게 출력됩니다"
-var clock = document.querySelector(".clock");
+let clock = document.querySelector(".clock");
 function getTimezoneOffset(){
-    var time = new Date();
+    const time = new Date();
 
-    var hour = String(time.getHours()).padStart(2,"0");
-    var minutes = String(time.getMinutes()).padStart(2,"0");
-    var seconds = String(time.getSeconds()).padStart(2,"0");
+    const hour = String(time.getHours()).padStart(2,"0");
+    const minutes = String(time.getMinutes()).padStart(2,"0");
+    const seconds = String(time.getSeconds()).padStart(2,"0");
 
-    var year = time.getFullYear();
-    var month = time.getMonth() + 1;
-    var date = time.getDate();
+    const year = time.getFullYear();
+    const month = time.getMonth() + 1;
+    const date = time.getDate();
 
     document.getElementById("clock").innerHTML = hour +":" + minutes + ":"+ seconds;
     document.getElementById("date").innerHTML = year +"년 " + month + "월 "+ date + "일 ";
@@ -20,93 +20,95 @@ function getTimezoneOffset(){
 
 
 // 달력 Part
-$(document).ready(function() {
-    calendarInit();
-});
-function calendarInit(){
-    var date = new Date();
-    var utc = date.getTime() + (date.getTimezoneOffset() * 60 * 1000);
-    var kstGap = 9 * 60 * 60 * 1000;
-    var today = new Date(utc + kstGap);
-  
-    var thisMonth = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-  
-    
-    var currentYear = thisMonth.getFullYear();
-    var currentMonth = thisMonth.getMonth();
-    var currentDate = thisMonth.getDate();
+let nowMonth = new Date();
+let today = new Date();
+today.setHours(0, 0, 0, 0);
 
-    // 달력 Part - 렌더링
-    renderCalender(thisMonth);
+// 달력 Part - 본격적으로 시작..!
+function buildCalendar() {
+    let firstDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth());
+    let lastDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0);
 
-    function renderCalender(thisMonth) {
+    let tbody_Calendar = document.querySelector(".Calendar tbody");
+            document.getElementById("year").innerText = nowMonth.getFullYear();
+            document.getElementById("month").innerText = leftPad(nowMonth.getMonth() + 1);
 
-        currentYear = thisMonth.getFullYear();
-        currentMonth = thisMonth.getMonth();
-        currentDate = thisMonth.getDate();
+            // 이전 출력결과가 남아있는 경우 초기화
+            while (tbody_Calendar.rows.length > 0) {
+                tbody_Calendar.deleteRow(tbody_Calendar.rows.length - 1);
+            }
+            // 첫번째 행 추가 
+            let nowRow = tbody_Calendar.insertRow();          
+            // 이번달 1일의 요일만큼 열 추가
+            for (let j = 0; j < firstDate.getDay(); j++) {  
+                let nowColumn = nowRow.insertCell();
+            }
 
-        // 이전 달
-        var startDay = new Date(currentYear, currentMonth, 0);
-        var prevDate = startDay.getDate();
-        var prevDay = startDay.getDay();
+            for (let nowDay = firstDate; nowDay <= lastDate; nowDay.setDate(nowDay.getDate() + 1)) {   // day는 날짜를 저장하는 변수, 이번달 마지막날까지 증가시키며 반복  
 
-        // 이번 달
-        var endDay = new Date(currentYear, currentMonth + 1, 0);
-        var nextDate = endDay.getDate();
-        var nextDay = endDay.getDay();
+                let nowColumn = nowRow.insertCell();        // 새 열을 추가하고
+                nowColumn.innerText = leftPad(nowDay.getDate());      // 추가한 열에 날짜 입력
 
-        // 현재 월 표기
-        $('.yearMonth').text(currentYear + '.' + (currentMonth + 1));
+            
+                if (nowDay.getDay() == 0) {                 // 일요일인 경우 글자색 빨강으로
+                    nowColumn.style.color = "#DC143C";
+                }
+                if (nowDay.getDay() == 6) {                 // 토요일인 경우 글자색 파랑으로 하고
+                    nowColumn.style.color = "#0000CD";
+                    nowRow = tbody_Calendar.insertRow();    // 새로운 행 추가
+                }
 
-        // 렌더링 html 요소 생성
-        calendar = document.querySelector('.dates')
-        calendar.innerHTML = '';
-        
-        // 지난달
-        for (var i = prevDate - prevDay + 1; i <= prevDate; i++) {
-            calendar.innerHTML = calendar.innerHTML + '<div class="day prev disable">' + i + '</div>'
+
+                if (nowDay < today) {                       // 지난날인 경우
+                    nowColumn.className = "pastDay";
+                }
+                else if (nowDay.getFullYear() == today.getFullYear() && nowDay.getMonth() == today.getMonth() && nowDay.getDate() == today.getDate()) { // 오늘인 경우           
+                    nowColumn.className = "today";
+                    nowColumn.onclick = function () { choiceDate(this); }
+                }
+                else {                                      // 미래인 경우
+                    nowColumn.className = "futureDay";
+                    nowColumn.onclick = function () { choiceDate(this); }
+                }
+            }
         }
-        // 이번달
-        for (var i = 1; i <= nextDate; i++) {
-            calendar.innerHTML = calendar.innerHTML + '<div class="day current">' + i + '</div>'
-        }
-        // 다음달
-        for (var i = 1; i <= (7 - nextDay == 7 ? 0 : 7 - nextDay); i++) {
-            calendar.innerHTML = calendar.innerHTML + '<div class="day next disable">' + i + '</div>'
-        }
-        // 오늘 날짜 표기
-        if (today.getMonth() == currentMonth) {
-            todayDate = today.getDate();
-            var currentMonthDate = document.querySelectorAll('.dates .current');
-            currentMonthDate[todayDate -1].classList.add('today');
-        }
+
+// 날짜 선택
+function choiceDate(nowColumn) {
+    if (document.getElementsByClassName("choiceDay")[0]) {                              // 기존에 선택한 날짜가 있으면
+        document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");  // 해당 날짜의 "choiceDay" class 제거
     }
-
-
-    // 달력 Part - nav
-    $('.navBtn.prev').on('click', function() {
-        thisMonth = new Date(currentYear, currentMonth - 1, 1);
-        renderCalender(thisMonth);
-    });
-    $('.navBtn.next').on('click', function() {
-        thisMonth = new Date(currentYear, currentMonth + 1, 1);
-        renderCalender(thisMonth); 
-    });
+    nowColumn.classList.add("choiceDay");           // 선택된 날짜에 "choiceDay" class 추가
 }
 
-var time = new Date();
+// 이전달 버튼 클릭
+function prevCalendar() {
+    nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth() - 1, nowMonth.getDate());   // 현재 달을 1 감소
+    buildCalendar();
+}
+// 다음달 버튼 클릭
+function nextCalendar() {
+    nowMonth = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, nowMonth.getDate());   // 현재 달을 1 증가
+    buildCalendar();
+}
 
-var viewYear = time.getFullYear();
-var viewMonth = time.getMonth();
-// document.querySelector('.yearMonth').textContent = `${viewYear}년 ${viewMonth + 1}월`;
 
 
 
-
-
-
+// input값이 한자리 숫자인 경우 앞에 '0' 붙혀주는 함수
+function leftPad(value) {
+    if (value < 10) {
+        value = "0" + value;
+        return value;
+    }
+    return value;
+}
 // 최종 출력되는 곳
 window.onload = function() {
+    // time
     getTimezoneOffset();
     setInterval(getTimezoneOffset,1000);
+
+    // calendar
+    buildCalendar();
 }

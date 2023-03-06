@@ -9,42 +9,45 @@
     <link rel="stylesheet" href="./css/style.css">
 </head>
 <body>
-    <!-- calender start -->
-    <div class="calendar">
-        <div class="header">
-            <div class="yearMonth" id="yearMonth"></div>
-            <div class="nav">
-                <button class="navBtn prev">&lt;</button>
-                <button class="navBtn today">Today</button>
-                <button class="navBtn next">&gt;</button>
-            </div>
-        </div>
-        <div class="main">
-            <div class="days">
-                <div class="day">MON</div>
-                <div class="day">TUE</div>
-                <div class="day">WED</div>
-                <div class="day">THU</div>
-                <div class="day">FRI</div>
-                <div class="day">SAT</div>
-                <div class="day">SUN</div>
-            </div>
-        </div>
-        <div class="dates"></div>
+    <div>
+        <!-- calender start -->
+        <table class="Calendar">
+            <thead>
+                <tr>
+                    <td onClick="prevCalendar();">&#60;</td>
+                    <td colspan="5" class="yearMonth" id="yearMonth">
+                        <span id="year"></span> .
+                        <span id="month"></span>
+                    </td>
+                    <td onClick="nextCalendar();">&#62;</td>
+                </tr>
+                <tr>
+                    <td>SUN</td>
+                    <td>MON</td>
+                    <td>TUE</td>
+                    <td>WED</td>
+                    <td>THU</td>
+                    <td>FRI</td>
+                    <td>SAT</td>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
     </div>
 
-    <!-- clock -->
-    <div class="clockWrap">
-        <div class="clock" id="clock"></div>
-        <div class="date" id="date"></div>
-    </div>
+    <!-- footer -->
+    <footer id = "footer">
+        <p class="clock" id="clock"></p>
+        <p class="date" id="date"></p>
+    
+        <p class="copyRight"><a href="https://jh-healing-place.tistory.com/">made by JStol</a></p>
+    </footer>
 
-    <!-- copyRight -->
-    <p class="copyRight"><a href="https://jh-healing-place.tistory.com/">made by JStol</a></p>
+    
 
 
-    <!-- script -->
-    <script src="./js/jquery.js"></script>
+    <!-- script Part -->
     <script src="./js/main.js"></script>
 </body>
 </html>
