@@ -45,27 +45,30 @@ function buildCalendar() {
 
             for (let nowDay = firstDate; nowDay <= lastDate; nowDay.setDate(nowDay.getDate() + 1)) {   // day는 날짜를 저장하는 변수, 이번달 마지막날까지 증가시키며 반복  
 
-                let nowColumn = nowRow.insertCell();        // 새 열을 추가하고
-                nowColumn.innerText = leftPad(nowDay.getDate());      // 추가한 열에 날짜 입력
+                // 새 열 추가
+                let nowColumn = nowRow.insertCell();        
+                nowColumn.innerText = leftPad(nowDay.getDate()); // 추가한 열에 날짜 입력
 
-            
-                if (nowDay.getDay() == 0) {                 // 일요일인 경우 글자색 빨강으로
+                // 일요일: 빨강
+                if (nowDay.getDay() == 0) {                 
                     nowColumn.style.color = "#DC143C";
                 }
-                if (nowDay.getDay() == 6) {                 // 토요일인 경우 글자색 파랑으로 하고
+                // 토요일: 파랑
+                if (nowDay.getDay() == 6) {                 
                     nowColumn.style.color = "#0000CD";
-                    nowRow = tbody_Calendar.insertRow();    // 새로운 행 추가
+                    nowRow = tbody_Calendar.insertRow(); // 새로운 행 추가
                 }
 
 
-                if (nowDay < today) {                       // 지난날인 경우
+                if (nowDay < today) {
                     nowColumn.className = "pastDay";
                 }
                 else if (nowDay.getFullYear() == today.getFullYear() && nowDay.getMonth() == today.getMonth() && nowDay.getDate() == today.getDate()) { // 오늘인 경우           
                     nowColumn.className = "today";
                     nowColumn.onclick = function () { choiceDate(this); }
                 }
-                else {                                      // 미래인 경우
+                else {            
+                    // 미래인 경우                          
                     nowColumn.className = "futureDay";
                     nowColumn.onclick = function () { choiceDate(this); }
                 }
@@ -74,10 +77,10 @@ function buildCalendar() {
 
 // 날짜 선택
 function choiceDate(nowColumn) {
-    if (document.getElementsByClassName("choiceDay")[0]) {                              // 기존에 선택한 날짜가 있으면
-        document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay");  // 해당 날짜의 "choiceDay" class 제거
+    if (document.getElementsByClassName("choiceDay")[0]) {
+        document.getElementsByClassName("choiceDay")[0].classList.remove("choiceDay"); // // "choiceDay" 제거
     }
-    nowColumn.classList.add("choiceDay");           // 선택된 날짜에 "choiceDay" class 추가
+    nowColumn.classList.add("choiceDay"); // "choiceDay" 추가
 }
 
 // 이전달 버튼 클릭
