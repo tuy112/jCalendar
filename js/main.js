@@ -75,6 +75,10 @@ function buildCalendar() {
             }
         }
 
+// 공휴일 데이터 넣어야함 + 접속지역 ip가 뜨도록 만들어야 합니다.
+// 아마 jsp쓰시면 쉽게 db를 넣을 수 있을거같은데 확인해보셔야 할거 같네요..! 화이팅입니다.
+
+
 // 날짜 선택
 function choiceDate(nowColumn) {
     if (document.getElementsByClassName("choiceDay")[0]) {
@@ -97,7 +101,7 @@ function nextCalendar() {
 
 
 
-// input값이 한자리 숫자인 경우 앞에 '0' 붙혀주는 함수
+// input값이 한자리 숫자인 경우 앞에 '0' 붙혀줌
 function leftPad(value) {
     if (value < 10) {
         value = "0" + value;
@@ -105,6 +109,9 @@ function leftPad(value) {
     }
     return value;
 }
+
+
+
 // 최종 출력되는 곳
 window.onload = function() {
     // time
